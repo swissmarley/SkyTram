@@ -19,7 +19,7 @@ to load Three.js and the font from a CDN).
 | `W` / `↑` | hold **POWER** | Apply power. It builds up gradually, so feather it. Too much at once jolts the passengers. |
 | `S` / `↓` | hold **BRAKE** | Brake. Hard braking is uncomfortable; start slowing down early. |
 | `A` `D` / `←` `→` | **◀ ▶** | Lean the tram into curves and against crosswind gusts. |
-| `C` (or the camera button) | camera button | Switch view: chase, driver's cab, trackside, high. |
+| `C` · `Q` `E` (and `←` `→` while stopped) | camera button | Switch view: chase, driver's cab, trackside, high. |
 | drag the 3D view | drag | Fine-tune the camera angle. It drifts back on its own. |
 | `Space` / `Enter` | **Open doors** | Open the doors once you've stopped at a platform. |
 | `B` · `M` · `P` · `T` | — | Ring the bell · mute · pause · skip ahead in time. |
