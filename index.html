@@ -448,14 +448,14 @@
  *  A cozy, low-poly aerial-tram driving game made with Three.js.
  *
  *  Table of contents
- *   0. Settings & helpers          8. People (townsfolk & passengers)
- *   1. Low-poly geometry kit       9. Audio (procedural WebAudio)
- *   2. Renderer, scene & lights   10. UI helpers
- *   3. Sky, stars, ocean          11. Game state & driving physics
- *   4. Track (CatmullRom rails)   12. Stations, boarding & workshop
- *   5. Islands & towns            13. Camera rig
- *   6. Clouds & distant scenery   14. Input
- *   7. The tram                   15. Main loop & boot
+ *   0. Settings & helpers               8. The tram
+ *   1. Low-poly geometry kit            9. Audio (procedural WebAudio)
+ *   2. Renderer, scene & lights        10. UI helpers
+ *   3. Sky, stars, ocean               11. Game state & driving physics
+ *   4. Track (CatmullRom rails)        12. Stations, boarding & workshop
+ *   5. Islands & towns                 13. Camera rig
+ *   6. Track meshes, clouds, scenery   14. Input
+ *   7. People (townsfolk & riders)     15. Time of day, HUD, main loop & boot
  * ===================================================================== */
 import * as THREE from 'three';
 
@@ -2096,7 +2096,7 @@ const scenery = (() => {
 })();
 
 /* ---------------------------------------------------------------------
- * 8 (built first). PEOPLE — low-poly townsfolk in standing & seated poses
+ * 7. PEOPLE — low-poly townsfolk in standing & seated poses
  * ------------------------------------------------------------------- */
 const personMat = new THREE.MeshLambertMaterial({ vertexColors: true });
 function personGeo(o, seated) {
@@ -2218,7 +2218,7 @@ function getWalker() {
 }
 
 /* ---------------------------------------------------------------------
- * 7. THE TRAM
+ * 8. THE TRAM
  *    Local frame: +x forward, +y up, +z right (matches the track frame).
  *    `root` sits on the rails between the bogies; `body` rides the springs.
  * ------------------------------------------------------------------- */
