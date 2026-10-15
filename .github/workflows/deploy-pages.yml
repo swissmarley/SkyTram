@@ -1,0 +1,68 @@
+# Publishes SkyTram (a single static index.html) to GitHub Pages.
+#
+# One-time setup: in the repository go to Settings → Pages → "Build and deployment"
+# and set Source to "GitHub Actions". After that every push to `main` redeploys,
+# and you can also run it by hand from the Actions tab.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deployment at a time; let an in-progress deploy finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v6
+
+      - name: Syntax-check the game script
+        run: |
+          node -e '
+            const fs = require("fs");
+            const html = fs.readFileSync("index.html", "utf8");
+            const m = html.match(/<script type="module">([\s\S]*?)<\/script>/);
+            if (!m) { console.error("No <script type=\"module\"> block found in index.html"); process.exit(1); }
+            fs.writeFileSync(process.env.RUNNER_TEMP + "/game.mjs", m[1]);
+          '
+          node --check "$RUNNER_TEMP/game.mjs"
+          echo "Game script parses fine."
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp -r docs _site/docs 2>/dev/null || true
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
